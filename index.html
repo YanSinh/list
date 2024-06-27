@@ -1,36 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="km">
 <head>
-    <link rel="icon" href="https://yansinh.github.io/csm/img/sinh.png" type="image/x-icon">
+<link rel="icon" href="https://yansinh.github.io/csm/img/sinh.png" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Sinh</title>
+    	<title>Sinh</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid black;
+            margin-top: 60px;
         }
         th, td {
+            border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+        #searchContainer {
+            position: sticky;
+            top: 0;
+            background-color: white;
+            z-index: 1000;
+            padding: 10px 0;
+        }
+        #suggestions {
+            display: none;
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .suggestion-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .suggestion-item:hover {
+            background-color: #f2f2f2;
         }
     </style>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>ល.រ</th>
-                <th>គោត្តនាម និងនាម</th>
-                <th>ភេទ</th>
-                <th>ថ្ងៃខែឆ្នាំកំណើត</th>
-                <th>ចំណាំ</th>
-            </tr>
-        </thead>
-        <tbody>
+
+<div id="searchContainer">
+    <input type="text" id="searchInput" onkeyup="filterSuggestions()" placeholder="ស្វែងរកឈ្មោះ..">
+    <div id="suggestions"></div>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>ឈ្មោះ</th>
+            <th>ភេទ</th>
+            <th>ថ្ងៃខែឆ្នាំកំណើត</th>
+            <th>ចំណាំ</th>
+        </tr>
+    </thead>
+    <tbody id="studentTable">
             <tr><td>1</td><td>កឹម វេត</td><td>ប្រុស</td><td>20/03/2007</td><td></td></tr>
             <tr><td>2</td><td>កុល គឹមលី</td><td>ប្រុស</td><td>05/06/2007</td><td></td></tr>
             <tr><td>3</td><td>កោះ សុវណ្ណបញ្ញា</td><td>ស្រី</td><td>01/07/2009</td><td></td></tr>
@@ -75,16 +112,151 @@
             <tr><td>42</td><td>ម៉ៅ ភូ</td><td>ប្រុស</td><td>07/05/2008</td><td></td></tr>
             <tr><td>43</td><td>មុំ ឃះសី</td><td>ស្រី</td><td>13/12/2006</td><td></td></tr>
             <tr><td>44</td><td>មៃ រចនា</td><td>ស្រី</td><td>21/06/2009</td><td></td></tr>
-            <tr style="color: red;"><td>45</td><td> </td></td><td> </td><td> </td><td> </td></tr>
-            <tr><td>46</td><td>យ៉ា គឹមលាង</td><td>ស្រី</td><td>17/02/2009</td><td></td></tr>
-            <tr><td>47</td><td>រេត ដាវ៉ាន់</td><td>ស្រី</td><td>05/05/2009</td><td></td></tr>
-            <tr><td>48</td><td>រុឹម ចាន់រចណា</td><td>ប្រុស</td><td>25/04/2009</td><td></td></tr>
-            <tr><td>49</td><td>រី នីត្ត</td><td>ប្រុស</td><td>19/07/2007</td><td></td></tr>
-            <tr><td>50</td><td>លន រក្សា</td><td>ស្រី</td><td>12/04/2009</td><td></td></tr>
-            <tr><td>51</td><td>សន វិលា</td><td>ប្រុស</td><td>07/07/2009</td><td></td></tr>
-            <tr><td>52</td><td>ស៑ង សុភ័ណ្ឌ</td><td>ស្រី</td><td>28/10/2009</td><td></td></tr>
-            <tr><td>53</td><td>សុិន ស្រីនិត</td><td>ស្រី</td><td>27/06/2009</td><td></td></tr>
+            <tr><td>45</td><td>យ៉ា គឹមលាង</td><td>ស្រី</td><td>17/02/2009</td><td></td></tr>
+            <tr><td>46</td><td>រេត ដាវ៉ាន់</td><td>ស្រី</td><td>05/05/2009</td><td></td></tr>
+            <tr><td>47</td><td>រុឹម ចាន់រចណា</td><td>ប្រុស</td><td>25/04/2009</td><td></td></tr>
+            <tr><td>48</td><td>រី នីត្ត</td><td>ប្រុស</td><td>19/07/2007</td><td></td></tr>
+            <tr><td>49</td><td>លន រក្សា</td><td>ស្រី</td><td>12/04/2009</td><td></td></tr>
+            <tr><td>50</td><td>សន វិលា</td><td>ប្រុស</td><td>07/07/2009</td><td></td></tr>
+            <tr><td>51</td><td>ស៑ង សុភ័ណ្ឌ</td><td>ស្រី</td><td>28/10/2009</td><td></td></tr>
+            <tr><td>52</td><td>សុិន ស្រីនិត</td><td>ស្រី</td><td>27/06/2009</td><td></td></tr>
         </tbody>
     </table>
+
+  <!--<input type="text" id="searchInput" onkeyup="filterSuggestions()" placeholder="Search for names..">-->
+    <div id="suggestions">
+        <div class="suggestion-item">កឹម វេត</div>
+        <div class="suggestion-item">កុល គឹមលី</div>
+        <div class="suggestion-item">កោះ សុវណ្ណបញ្ញា</div>
+        <div class="suggestion-item">ខឿន ពិសិដ្ឋ</div>
+        <div class="suggestion-item">គង់ភាង ភារម្យ</div>
+        <div class="suggestion-item">គា ល័យ</div>
+        <div class="suggestion-item">គ្នា រស្មី</div>
+        <div class="suggestion-item">គឹម នីសា</div>
+        <div class="suggestion-item">ឃន សុភ័ក្ត</div>
+        <div class="suggestion-item">ឃៀន ចំរើន</div>
+        <div class="suggestion-item">ងឹម សុខកែវ</div>
+        <div class="suggestion-item">ចក់ កែវ</div>
+        <div class="suggestion-item">ចន សុីណា</div>
+        <div class="suggestion-item">ចន ស្រីកា</div>
+        <div class="suggestion-item">ចាន់ រស្មី</div>
+        <div class="suggestion-item">ឆេង រ៉ានី</div>
+        <div class="suggestion-item">ជា សុកន</div>
+        <div class="suggestion-item">ជុន មីនា</div>
+        <div class="suggestion-item">ជឿន ណារី</div>
+        <div class="suggestion-item">ឈិន សៀវមុី</div>
+        <div class="suggestion-item">ឈិន អឿយ</div>
+        <div class="suggestion-item">ញ៉ ថៃលីន</div>
+        <div class="suggestion-item">ញ៉ ស្រីពៅ</div>
+        <div class="suggestion-item">ញឹម បូរ៉ា</div>
+        <div class="suggestion-item">ដាង ធីម</div>
+        <div class="suggestion-item">តេង ម៉ារី</div>
+        <div class="suggestion-item">ទិន ស្រីពេជ្រ</div>
+        <div class="suggestion-item">នន ហេង</div>
+        <div class="suggestion-item">នាង ស្រីនិច</div>
+        <div class="suggestion-item">នី ស្រ៑</div>
+        <div class="suggestion-item">នេន ស្រីពេជ្រ</div>
+        <div class="suggestion-item">នៅ ឆាយដេត</div>
+        <div class="suggestion-item">ប្រស ណាវីន</div>
+        <div class="suggestion-item">ប៉ាន់ ស្រីណាត់</div>
+        <div class="suggestion-item">បុិច សំណាន</div>
+        <div class="suggestion-item">ប៑ូ មិថុនា</div>
+        <div class="suggestion-item">ផាន់ ពេព្យ</div>
+        <div class="suggestion-item">ភី ម៉ូនីកា</div>
+        <div class="suggestion-item">ភឹម ចិត្រា</div>
+        <div class="suggestion-item">ម៉ម ដាវីត</div>
+        <div class="suggestion-item">ម៉ាន ប៑ុនលី</div>
+        <div class="suggestion-item">ម៉ៅ ភូ</div>
+        <div class="suggestion-item">មុំ ឃះសី</div>
+        <div class="suggestion-item">មៃ រចនា</div>
+        <div class="suggestion-item">យ៉ា គឹមលាង</div>
+        <div class="suggestion-item">រេត ដាវ៉ាន់</div>
+        <div class="suggestion-item">រុឹម ចាន់រចណា</div>
+        <div class="suggestion-item">រី នីត្ត</div>
+        <div class="suggestion-item">លន រក្សា</div>
+        <div class="suggestion-item">សន វិលា</div>
+        <div class="suggestion-item">ស៑ង សុភ័ណ្ឌ</div>
+        <div class="suggestion-item">សុិន ស្រីនិត</div>
+    </div>
+<script>
+    function filterSuggestions() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const suggestions = document.getElementById('suggestions');
+        const table = document.getElementById('studentTable');
+        const rows = table.getElementsByTagName('tr');
+        let found = false;
+        
+        // Clear previous suggestions
+        suggestions.innerHTML = '';
+        suggestions.style.display = 'none';
+
+        // Show all rows if input is empty
+        if (input === '') {
+            Array.from(rows).forEach(row => {
+                row.style.display = '';
+            });
+            return;
+        }
+
+        suggestions.style.display = 'block';
+
+        // Filter the table rows based on the input
+        Array.from(rows).forEach((row, index) => {
+            const cells = row.getElementsByTagName('td');
+            const nameCell = cells[1] || null; // Assuming the name is in the second column
+
+            if (nameCell) {
+                const name = nameCell.textContent.toLowerCase();
+                if (name.includes(input)) {
+                    found = true;
+                    // Create suggestion item
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.className = 'suggestion-item';
+                    suggestionItem.textContent = nameCell.textContent;
+                    suggestionItem.onclick = () => {
+                        document.getElementById('searchInput').value = nameCell.textContent;
+                        filterTable(nameCell.textContent);
+                        suggestions.style.display = 'none';
+                    };
+                    suggestions.appendChild(suggestionItem);
+                }
+            }
+        });
+
+        // If no suggestions found
+        if (!found) {
+            const noMatch = document.createElement('div');
+            noMatch.className = 'suggestion-item';
+            noMatch.textContent = 'រកមិនឃើញឈ្មោះដែលត្រូវគ្នាទេ។';
+            noMatch.style.color = 'red';
+            suggestions.appendChild(noMatch);
+        }
+    }
+
+    function filterTable(name) {
+        const table = document.getElementById('studentTable');
+        const rows = table.getElementsByTagName('tr');
+        let found = false;
+        
+        Array.from(rows).forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const nameCell = cells[1] || null; // Assuming the name is in the second column
+
+            if (nameCell) {
+                if (nameCell.textContent.includes(name)) {
+                    row.style.display = '';
+                    found = true;
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+
+        // If no rows match the search
+        if (!found) {
+            alert('No matching names found');
+        }
+    }
+</script>
 </body>
 </html>
