@@ -1,0 +1,46 @@
+
+body {
+    font-family: Arial, sans-serif;
+     background-color:#f8f8f8;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 60px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+#searchInput {
+    width: 97%;
+    padding: 9px;
+    border: 1px solid #19a0cf;
+    font-size:16px;
+   
+}
+#searchContainer {
+    position: sticky;
+    top: 0;
+    background-color: #f8f8f8;
+    z-index: 1000;
+    padding: 10px;
+}
+#suggestions {
+    display: none;
+    border: 1px solid #ddd;
+    max-height: 150px;
+    overflow-y: auto;
+}
+.suggestion-item {
+    padding: 8px;
+    cursor: pointer;
+}
+.suggestion-item:hover {
+    background-color: #f2f2f2;
+}
+
