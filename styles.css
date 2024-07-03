@@ -1,7 +1,6 @@
-
 body {
     font-family: Arial, sans-serif;
-     background-color:#f8f8f8;
+    background-color: #f8f8f8;
 }
 table {
     width: 100%;
@@ -16,31 +15,59 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
-#searchInput {
-    width: 97%;
-    padding: 9px;
-    border: 1px solid #19a0cf;
-    font-size:16px;
-   
-}
 #searchContainer {
     position: sticky;
     top: 0;
     background-color: #f8f8f8;
     z-index: 1000;
+    padding: 1px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+}
+.search-box {
+    display: flex;
+    align-items: center;
+}
+#searchInput {
+    flex: 1;
     padding: 10px;
+    border: 1px solid #19a0cf;
+    font-size: 16px;
+    border-radius: 5px 0 0 5px;
+}
+#searchButton {
+    padding: 13px;
+    background-color: #19a0cf;
+    border: none;
+    color: white;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
 }
 #suggestions {
     display: none;
     border: 1px solid #ddd;
     max-height: 150px;
     overflow-y: auto;
+    border-radius: 0 0 5px 5px;
+    background-color: white;
+    margin-top: -1px; /* This removes the gap between the input and the suggestions */
+    width: calc(100% - 2px); /* Adjust width to match the search input */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .suggestion-item {
     padding: 8px;
     cursor: pointer;
+    border-bottom: 1px solid #ddd;
 }
 .suggestion-item:hover {
     background-color: #f2f2f2;
 }
-
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+.suggestion-item.no-match {
+    color: red;
+    text-align: center;
+}
