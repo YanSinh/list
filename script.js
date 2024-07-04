@@ -47,7 +47,7 @@
             if (!found) {
                 const noMatch = document.createElement('div');
                 noMatch.className = 'suggestion-item';
-                noMatch.textContent = 'រកមិនឃើញឈ្មោះដែលត្រូវគ្នាទេ។/No matching names found';
+                noMatch.textContent = 'រកមិនឃើញឈ្មោះដែលត្រូវគ្នាទេ។';
                 noMatch.style.color = 'red';
                 suggestions.appendChild(noMatch);
             }
