@@ -5,11 +5,11 @@
             const rows = table.getElementsByTagName('tr');
             let found = false;
 
-            // Clear previous suggestions
+           
             suggestions.innerHTML = '';
             suggestions.style.display = 'none';
 
-            // Show all rows if input is empty
+           
             if (input === '') {
                 Array.from(rows).forEach(row => {
                     row.style.display = '';
@@ -19,16 +19,15 @@
 
             suggestions.style.display = 'block';
 
-            // Filter the table rows based on the input
+            
             Array.from(rows).forEach((row, index) => {
                 const cells = row.getElementsByTagName('td');
-                const nameCell = cells[1] || null; // Assuming the name is in the second column
-
+                const nameCell = cells[1] || null; 
                 if (nameCell) {
                     const name = nameCell.textContent.toLowerCase();
                     if (name.includes(input)) {
                         found = true;
-                        // Create suggestion item
+                       
                         const suggestionItem = document.createElement('div');
                         suggestionItem.className = 'suggestion-item';
                         suggestionItem.textContent = nameCell.textContent;
@@ -43,7 +42,7 @@
                 }
             });
 
-            // If no suggestions found
+            
             if (!found) {
                 const noMatch = document.createElement('div');
                 noMatch.className = 'suggestion-item';
@@ -60,7 +59,7 @@
 
             Array.from(rows).forEach(row => {
                 const cells = row.getElementsByTagName('td');
-                const nameCell = cells[1] || null; // Assuming the name is in the second column
+                const nameCell = cells[1] || null; 
 
                 if (nameCell) {
                     if (nameCell.textContent.includes(name)) {
@@ -72,7 +71,7 @@
                 }
             });
 
-            // If no rows match the search
+           
             if (!found) {
                 alert('No matching names found');
             }
@@ -143,18 +142,25 @@
             }
         }
 
-        // Function to set row numbers automatically
+       
         function setRowNumbers() {
             const table = document.getElementById('studentTable');
             const rows = table.getElementsByTagName('tr');
 
             Array.from(rows).forEach((row, index) => {
-                if (index > 0) { // Skip the header row
+                if (index > 0) { 
                     const cell = row.getElementsByTagName('td')[0];
                     cell.textContent = index;
                 }
             });
         }
 
-        // Set row numbers when the page loads
+     
         window.onload = setRowNumbers;
+
+    window.addEventListener("load", function(){
+      setTimeout(function(){
+        document.querySelector(".ring").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }, 8000); 
+    });
