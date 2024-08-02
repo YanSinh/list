@@ -62,8 +62,8 @@ th {
     overflow-y: auto;
     border-radius: 0 0 5px 5px;
     background-color: white;
-    margin-top: -1px; 
-    width: calc(100% - 2px); 
+    margin-top: -1px; /* This removes the gap between the input and the suggestions */
+    width: calc(100% - 2px); /* Adjust width to match the search input */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -86,79 +86,47 @@ th {
     text-align: center;
 }
 
-.ring {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 150px;
-    height: 150px;
-    background: transparent;
-    border: 3px solid #3c3c3c;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 150px;
-    font-family: sans-serif;
-    font-size: 20px;
-    color: #fff000;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    text-shadow: 0 0 10px #fff000;
-    box-shadow: 0 0 20px rgba(0, 0, 0, .5);
+/* Loader CSS */
+.container {
+    --uib-size: 35px;
+    --uib-color: black;
+    --uib-speed: 1s;
+    --uib-stroke: 3.5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: var(--uib-size);
+    height: calc(var(--uib-size) * 0.9);
 }
 
-.ring:before {
-    content: '';
-    position: absolute;
-    top: -3px;
-    left: -3px;
-    width: 100%;
+.bar {
+    width: var(--uib-stroke);
     height: 100%;
-    border: 3px solid transparent;
-    border-top: 3px solid #fff000;
-    border-right: 3px solid #fff000;
-    border-radius: 50%;
-    animation: animateC 2s linear infinite;
+    background-color: var(--uib-color);
+    transition: background-color 0.3s ease;
 }
 
-span {
-    display: block;
-    position: absolute;
-    top: calc(50% - 2px);
-    left: 50%;
-    width: 50%;
-    height: 4px;
-    background: transparent;
-    transform-origin: left;
-    animation: animate 2s linear infinite;
+.bar:nth-child(1) {
+    animation: grow var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.45) infinite;
 }
 
-span:before {
-    content: '';
-    position: absolute;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #fff000;
-    top: -6px;
-    right: -8px;
-    box-shadow: 0 0 20px #fff000;
+.bar:nth-child(2) {
+    animation: grow var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.3) infinite;
 }
 
-@keyframes animateC {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+.bar:nth-child(3) {
+    animation: grow var(--uib-speed) ease-in-out calc(var(--uib-speed) * -0.15) infinite;
 }
 
-@keyframes animate {
-    0% {
-        transform: rotate(45deg);
-    }
-    100% {
-        transform: rotate(405deg);
-    }
+.bar:nth-child(4) {
+    animation: grow var(--uib-speed) ease-in-out infinite;
 }
+
+@keyframes grow {
+    0%, 100% {
+        transform: scaleY(0.3);
+    }
+    50% {
+        transform: scaleY(1);
+    }
+        }
