@@ -158,9 +158,9 @@
      
         window.onload = setRowNumbers;
 
-   window.addEventListener("load", function(){
+    window.addEventListener("load", function(){
         setTimeout(function(){
-            document.querySelector(".container").style.display = "none";
+            document.querySelector(".loader-wrapper").style.display = "none";
             document.getElementById("content").style.display = "block";
-        }, 4000); 
+        }, 5000); 
     });
